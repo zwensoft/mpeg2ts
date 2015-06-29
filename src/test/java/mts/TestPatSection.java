@@ -41,7 +41,7 @@ public class TestPatSection {
 				fos.close();
 
 				IBitstream stream = new BuffBitstream("temp", IBitstream.BS_INPUT);
-				flavor.Generated.PAT pat_parser = new flavor.Generated.PAT();
+				flavor.generated.PAT pat_parser = new flavor.generated.PAT();
 				pat_parser.get(stream);
 			} catch (IOException e) {
 				e.printStackTrace();

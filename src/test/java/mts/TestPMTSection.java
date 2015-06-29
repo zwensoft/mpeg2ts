@@ -36,7 +36,7 @@ public class TestPMTSection {
 				fos.close();
 
 				IBitstream stream = new BuffBitstream("temp", IBitstream.BS_INPUT);
-				flavor.Generated.PMT parser = new flavor.Generated.PMT();
+				flavor.generated.PMT parser = new flavor.generated.PMT();
 				parser.get(stream);
 			} catch (IOException e) {
 				e.printStackTrace();

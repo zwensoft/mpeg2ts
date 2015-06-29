@@ -19,7 +19,7 @@ public class TestPatDecode {
 		stream.getbits(8);
 		stream.getbits(8);
 		;
-		flavor.Generated.PAT pat_parser = new flavor.Generated.PAT();
+		flavor.generated.PAT pat_parser = new flavor.generated.PAT();
 		int ret = pat_parser.get(stream);
 		System.out.println(ret);
 		

@@ -52,7 +52,7 @@ public class TestTVCTSection {
 				fos.close();
 
 				IBitstream stream = new BuffBitstream("temp", IBitstream.BS_INPUT);
-				flavor.Generated.TVCT parser = new flavor.Generated.TVCT();
+				flavor.generated.TVCT parser = new flavor.generated.TVCT();
 				parser.get(stream);
 			} catch (IOException e) {
 				e.printStackTrace();

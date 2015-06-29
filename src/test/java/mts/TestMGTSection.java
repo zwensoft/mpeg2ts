@@ -47,7 +47,7 @@ public class TestMGTSection {
 				fos.close();
 
 				IBitstream stream = new BuffBitstream("temp", IBitstream.BS_INPUT);
-				flavor.Generated.MGT parser = new flavor.Generated.MGT();
+				flavor.generated.MGT parser = new flavor.generated.MGT();
 				parser.get(stream);
 			} catch (IOException e) {
 				e.printStackTrace();
