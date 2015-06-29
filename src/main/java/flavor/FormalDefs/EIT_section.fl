@@ -1,0 +1,50 @@
+%include "Descriptor.fl"
+%include "MultiString.fl"
+
+class EITEvent
+{
+	bit(2) reserved1 = 0b11;
+	unsigned int(14) event_id;
+	unsigned int(32) start_time;
+	bit(2) reserved2 = 0b11;
+	unsigned int(2) ETM_location;
+	unsigned int(20) length_in_seconds;
+	unsigned int(8) title_length;
+	MultiString title_text;
+	// TODO: check title_length == lengthof(title_text)
+
+	bit(4) reserved3 = 0b1111;
+	unsigned int(12) descriptors_length;
+	int remain_desc_bytes=descriptors_length;
+	while(remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= (lengthof(descriptor)/8);
+	}
+};
+
+class EIT
+{
+	unsigned int(8) table_id = 0xCB;
+	bit(1) section_syntax_indicator = 1;
+	bit(1) private_indicator = 1;
+	bit(2) reserved1 = 0b11;
+	unsigned int(12) section_length;
+	unsigned int(16) source_id;
+	bit(2) reserved2 = 0b11;
+	unsigned int(5) version_number;
+	bit(1) current_next_indicator = 0b1;
+	unsigned int(8) section_number;
+	unsigned int(8) last_section_number;
+	unsigned int(8) protocol_version;
+
+	unsigned int(8) num_events_in_section;
+	int en;
+	for(en=0; en < num_events_in_section; en++)
+	{
+		EITEvent event;
+	}
+
+	unsigned int(32) CRC_32;
+};
+

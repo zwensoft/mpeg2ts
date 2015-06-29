@@ -1,0 +1,32 @@
+class PATProgram
+{
+	unsigned int(16) program_number;
+	skipbits(3); // reserved
+	if (program_number == 0)
+		unsigned int(13) network_PID;
+	else
+		unsigned int(13) program_map_PID;
+};
+
+class PAT
+{
+	unsigned int(8) table_id = 0;
+	bit(1) section_syntax_indicator = 1;
+	bit(1) private_indicator = 0;
+	skipbits(2); // reserved
+	unsigned int(12) section_length;
+	unsigned int(16) transport_stream_id;
+	skipbits(2); // reserved
+	unsigned int(5) version_number;
+	bit(1) current_next_indicator;
+	unsigned int(8) section_number;
+	unsigned int(8) last_section_number;
+	
+	int total_pat_program = (section_length - 9) / 4;
+	int loop_cnt;
+	for(loop_cnt = 0; loop_cnt < total_pat_program; loop_cnt++)
+	{
+		PATProgram program;
+ 	}
+	unsigned int(32) CRC_32;
+}

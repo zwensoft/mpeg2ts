@@ -1,0 +1,8 @@
+
+class Descriptor
+{
+	unsigned int(8) descriptor_tag;
+	unsigned int(8) descriptor_length;
+	unsigned char(8) descriptor_data[descriptor_length];
+} 
+

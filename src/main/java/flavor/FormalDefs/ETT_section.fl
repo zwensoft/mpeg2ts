@@ -1,0 +1,21 @@
+%include "MultiString.fl"
+
+class ETT
+{
+	unsigned int(8) table_id = 0xCC;
+	bit(1) section_syntax_indicator = 1;
+	bit(1) private_indicator = 1;
+	bit(2) reserved1 = 0b11;
+	unsigned int(12) section_length;
+	unsigned int(16) ETT_table_id_extension = 0x0000;
+	bit(2) reserved2 = 0b11;
+	unsigned int(5) version_number;
+	bit(1) current_next_indicator = 1;
+	unsigned int(8) section_number = 0x00;
+	unsigned int(8) last_section_number = 0x00;
+	unsigned int(8) protocol_version;
+	unsigned int(32) ETM_id;
+	MultiString extended_text_message;
+	unsigned int(32) CRC_32;
+};
+

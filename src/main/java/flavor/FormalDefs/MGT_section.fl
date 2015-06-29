@@ -1,0 +1,53 @@
+%include "Descriptor.fl"
+
+class MGTTable
+{
+	unsigned int(16) table_type;
+	bit(3) reserved1 = 0b111;
+	unsigned int(13) table_type_PID;
+	bit(3) reserved2 = 0b111;
+	unsigned int(5) table_type_version_number;
+	unsigned int(32) number_bytes;
+	bit(4) reserved3 = 0b1111;
+
+	unsigned int(12) table_type_descriptors_length;
+	int remain_desc_bytes = table_type_descriptors_length;
+	while(remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= (lengthof(descriptor)/8);
+	}
+};
+
+class MGT
+{
+	unsigned int(8) table_id = 0xC7;
+	bit(1) section_syntax_indicator = 1;
+	bit(1) private_indicator = 1;
+	bit(2) reserved1 = 0b11;
+	unsigned int(12) section_length;
+	unsigned int(16) table_id_extension = 0x0000;
+	bit(2) reserved2 = 0b11;
+	unsigned int(5) version_number;
+	bit(1) current_next_indicator = 0b1;
+	unsigned int(8) section_number = 0;
+	unsigned int(8) last_section_number = 0;
+	unsigned int(8) protocol_version;
+	unsigned int(16) tables_defined;
+	int tn;
+	for(tn=0; tn < tables_defined; tn++)
+	{
+		MGTTable table;
+	}
+
+	bit(4) reserved3 = 0b1111;
+	unsigned int(12) descriptors_length;
+	int remain_desc_bytes=descriptors_length;
+	while(remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= (lengthof(descriptor)/8);
+	}
+	unsigned int(32) CRC_32;
+};
+

@@ -1,0 +1,68 @@
+%include "Descriptor.fl"
+%include "MultiString.fl"
+
+
+class RRTDimensionValue
+{
+	unsigned int(8) abbrev_rating_value_length;
+	MultiString abbrev_rating_value_text;
+	// TODO: check abbrev_rating_value_length == lengthof(abbrev_rating_value_text)
+
+	unsigned int(8) rating_value_length;
+	MultiString rating_value_text;
+	// TODO: check rating_value_length == lengthof(rating_value_text)
+};
+
+class RRTDimension
+{
+	unsigned int(8) dimension_name_length;
+	MultiString dimension_name_text;
+	// TODO: check dimension_name_length == lengthof(dimension_name_text)
+	bit(3) reserved = 0b111;
+	bit(1) graduated_scale;
+	unsigned int(4) values_defined;
+	int nval;
+	for(nval=0; nval < values_defined; nval++)
+	{
+		RRTDimensionValue value;
+	}
+};
+
+class RRT
+{
+	unsigned int(8) table_id = 0xCA;
+	bit(1) section_syntax_indicator = 1;
+	bit(1) private_indicator = 1;
+	bit(2) reserved1 = 0b11;
+	unsigned int(12) section_length;
+	bit(8) reserved2 = 0xFF;
+	unsigned int(8) rating_region;
+	bit(2) reserved3 = 0b11;
+	unsigned int(5) version_number;
+	bit(1) current_next_indicator = 1;
+	unsigned int(8) section_number;
+	unsigned int(8) last_section_number;
+	unsigned int(8) protocol_version;
+	unsigned int(8) rating_region_name_length;
+	MultiString rating_region_name_text;
+	// TODO: check rating_region_name_length == lengthof(rating_region_name_text)
+
+	unsigned int(8) dimensions_defined;
+	int ndim;
+	for(ndim=0; ndim < dimensions_defined; ndim++)
+	{
+		RRTDimension dimension;
+	}
+
+	bit(6) reserved4 = 0b111111;
+	unsigned int(10) descriptors_length;
+	int remain_desc_bytes=descriptors_length;
+	while(remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= (lengthof(descriptor)/8);
+	}
+
+	unsigned int(32) CRC_32;
+};
+

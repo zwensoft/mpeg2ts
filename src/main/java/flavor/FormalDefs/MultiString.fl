@@ -1,0 +1,20 @@
+
+class MultiString
+{
+	unsigned int(8) number_strings;
+	int nstr;
+	for(nstr=0; nstr < number_strings; nstr++)
+	{
+		unsigned int(24) ISO_639_language_code;
+		unsigned int(8) number_segments;
+		int nseg;
+		for(nseg=0; nseg < number_segments; nseg++)
+		{
+			unsigned int(8) compression_type;
+			unsigned int(8) mode;
+			unsigned int(8) number_bytes;
+			unsigned char(8) compressed_string_byte[number_bytes];
+		}
+	}
+} 
+

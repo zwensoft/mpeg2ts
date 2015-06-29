@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.ee.columbia.edu/flavor"
+            xmlns="http://www.ee.columbia.edu/flavor"
+            elementFormDefault="qualified">
+<xsd:include schemaLocation="fltypes.xsd"/>
+
+
+<xsd:complexType name="CVCTChannel">
+    <xsd:sequence>
+        <xsd:element name="short_name" type="flUInt" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="reserved1" type="flUInt"/>
+        <xsd:element name="major_channel_number" type="flUInt"/>
+        <xsd:element name="minor_channel_number" type="flUInt"/>
+        <xsd:element name="modulation_mode" type="flUInt"/>
+        <xsd:element name="carrier_frequency" type="flUInt"/>
+        <xsd:element name="channel_TSID" type="flUInt"/>
+        <xsd:element name="program_number" type="flUInt"/>
+        <xsd:element name="ETM_location" type="flUInt"/>
+        <xsd:element name="access_controlled" type="flUInt"/>
+        <xsd:element name="hidden" type="flUInt"/>
+        <xsd:element name="path_select" type="flUInt"/>
+        <xsd:element name="out_of_band" type="flUInt"/>
+        <xsd:element name="hide_guide" type="flUInt"/>
+        <xsd:element name="reserved3" type="flUInt"/>
+        <xsd:element name="service_type" type="flUInt"/>
+        <xsd:element name="source_id" type="flUInt"/>
+        <xsd:element name="reserved4" type="flUInt"/>
+        <xsd:element name="descriptors_length" type="flUInt"/>
+        <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="descriptor" type="Descriptor"/>
+        </xsd:sequence>
+    </xsd:sequence>
+    <xsd:attribute name="aligned" type="xsd:unsignedInt" use="optional"/>
+</xsd:complexType>
+
+<xsd:complexType name="CVCT">
+    <xsd:sequence>
+        <xsd:element name="table_id" type="flUInt"/>
+        <xsd:element name="section_syntax_indicator" type="flUInt"/>
+        <xsd:element name="private_indicator" type="flUInt"/>
+        <xsd:element name="reserved1" type="flUInt"/>
+        <xsd:element name="section_length" type="flUInt"/>
+        <xsd:element name="transport_stream_id" type="flUInt"/>
+        <xsd:element name="reserved2" type="flUInt"/>
+        <xsd:element name="version_number" type="flUInt"/>
+        <xsd:element name="current_next_indicator" type="flUInt"/>
+        <xsd:element name="section_number" type="flUInt"/>
+        <xsd:element name="last_section_number" type="flUInt"/>
+        <xsd:element name="protocol_version" type="flUInt"/>
+        <xsd:element name="num_channels_in_section" type="flUInt"/>
+        <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="channel" type="CVCTChannel"/>
+        </xsd:sequence>
+        <xsd:element name="reserved3" type="flUInt"/>
+        <xsd:element name="additional_descriptors_length" type="flUInt"/>
+        <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="descriptor" type="Descriptor"/>
+        </xsd:sequence>
+        <xsd:element name="CRC_32" type="flUInt"/>
+    </xsd:sequence>
+    <xsd:attribute name="aligned" type="xsd:unsignedInt" use="optional"/>
+</xsd:complexType>
+
+<xsd:element name="CVCT" type="CVCT"/>
+
+</xsd:schema>

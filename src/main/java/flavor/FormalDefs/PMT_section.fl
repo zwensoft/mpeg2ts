@@ -1,0 +1,52 @@
+%include "Descriptor.fl"
+
+class PMTStream
+{
+	unsigned int(8) stream_type;
+	skipbits(3); // reserved
+	unsigned int(13) elementary_PID;
+	skipbits(4); // reserved
+	unsigned int(12) ES_info_length;
+	int remain_desc_bytes = ES_info_length;
+	while (remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= lengthof(descriptor);
+	}
+};
+
+class PMT
+{
+	unsigned int(8) table_id = 2;
+	bit(1) section_syntax_indicator = 1;
+	bit(1) private_indicator = 0;
+	skipbits(2); // reserved
+	unsigned int(12) section_length;
+	unsigned int(16) program_number;
+	skipbits(2); // reserved
+	unsigned int(5) version_number;
+	bit(1) current_next_indicator;
+	unsigned int(8) section_number = 0;
+	unsigned int(8) last_section_numbe = 0;
+	skipbits(3); // reserved
+	unsigned int(13) PCR_PID;
+	skipbits(4); // reserved
+	unsigned int(12) program_info_length;
+	
+	int remain_desc_bytes = program_info_length;
+	while(remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= (lengthof(descriptor)/8);
+	}
+
+	int remain_section_bytes = section_length - program_info_length - 9 - 4;
+	while (remain_section_bytes > 0)
+	{
+		PMTStream stream;
+		remain_section_bytes -= (lengthof(stream)/8);
+	}
+
+ 	unsigned int(32) CRC_32;
+};
+

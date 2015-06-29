@@ -1,0 +1,65 @@
+%include "Descriptor.fl"
+
+class TVCTChannel
+{
+	unsigned int(16) short_name[7];
+	bit(4) reserved1 = 0b1111;
+	unsigned int(10) major_channel_number;
+	unsigned int(10) minor_channel_number;
+	unsigned int(8) modulation_mode;
+	unsigned int(32) carrier_frequency;
+	unsigned int(16) channel_TSID;
+	unsigned int(16) program_number;
+	unsigned int(2) ETM_location;
+	bit(1) access_controlled;
+	bit(1) hidden;
+	bit(2) reserved2 = 0b11;
+	bit(1) hide_guide;
+	bit(3) reserved3 = 0b111;
+	unsigned int(6) service_type;
+	unsigned int(16) source_id;
+	bit(6) reserved4 = 0b111111;
+
+	unsigned int(10) descriptors_length;
+	int remain_desc_bytes=descriptors_length;
+	while(remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= (lengthof(descriptor)/8);
+	}
+};
+
+class TVCT
+{
+	unsigned int(8) table_id = 0xC8;
+	bit(1) section_syntax_indicator = 1;
+	bit(1) private_indicator = 1;
+	bit(2) reserved1 = 0b11;
+	unsigned int(12) section_length;
+	unsigned int(16) transport_stream_id;
+	bit(2) reserved2 = 0b11;
+	unsigned int(5) version_number;
+	bit(1) current_next_indicator;
+	unsigned int(8) section_number;
+	unsigned int(8) last_section_number;
+	unsigned int(8) protocol_version;
+
+	unsigned int(8) num_channels_in_section;
+	int cn;
+	for(cn=0; cn < num_channels_in_section; cn++)
+	{
+		TVCTChannel channel;
+	}
+
+	bit(6) reserved3 = 0b111111;
+	unsigned int(10) additional_descriptors_length;
+	int remain_desc_bytes=additional_descriptors_length;
+	while(remain_desc_bytes > 0)
+	{
+		Descriptor descriptor;
+		remain_desc_bytes -= (lengthof(descriptor)/8);
+	}
+
+	unsigned int(32) CRC_32;
+};
+
