@@ -204,6 +204,42 @@ public class BuffBitstream implements IBitstream {
 		close_fd = true;
 	}
     
+	public BuffBitstream(byte[] tmp) {
+		this(tmp, 0, tmp.length);
+	}
+	
+	public BuffBitstream(byte[] in, int offset, int length) {
+		type = BS_INPUT;
+		int _buf_len = in.length;
+	      
+		ibuf_len = _buf_len;
+		icur_bit = 0;
+		itot_bits = 0;
+        ibuf = new byte[_buf_len];
+  		
+        dbuf_len = _buf_len;
+		dcur_bit = 0;
+		dtot_bits = 0;
+        dsize = 0; 
+        dbuf = new byte[_buf_len];
+        
+        cur_buf = 0;    // Current buffer is i/o buffer
+        buf = ibuf;
+		buf_len = ibuf_len;
+		cur_bit = icur_bit;
+		tot_bits = itot_bits;
+		
+		try {
+			this.in = new ByteArrayInputStream(in, offset, length);
+			cur_bit = BUF_LEN << 3;	// Fake we are at the eof of buffer
+			fill_buf();
+		} catch(IOException e) {
+			throw new IllegalStateException(e.toString());
+		}
+		close_fd = true;
+	}
+
+
 	/**
 	 *	Close opened files
 	 */
