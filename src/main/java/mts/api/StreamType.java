@@ -41,7 +41,15 @@ public enum StreamType {
 	/**
 	 * 
 	 */
-	ISO_IEC_13818_1_Annex_A_DSM_CC(0x08);
+	ISO_IEC_13818_1_Annex_A_DSM_CC(0x08),
+	/**
+	 * H264
+	 */
+	AVC(0x1b),
+	/**
+	 * MPEG-2-AAC
+	 */
+	ADTS(0x0f);
 
 	private int value;
 
